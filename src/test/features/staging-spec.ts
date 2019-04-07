@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Google Inc. All Rights Reserved.
+ * Copyright 2018 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -113,6 +113,20 @@ suite('ModelViewerElementBase with StagingMixin', () => {
         await timePasses(50);  // An arbitrary amount of time, greater than one
                                // rAF though
         expect(element.turntableRotation).to.be.greaterThan(turntableRotation);
+      });
+
+      suite('when the model is not visible', () => {
+        setup(() => {
+          Object.defineProperty(
+            element, 'modelIsVisible', {value:false});
+        });
+
+        test('does not cause the model to rotate over time', async () => {
+          const {turntableRotation} = element;
+          await timePasses(50);  // An arbitrary amount of time, greater than one
+                                 // rAF though
+          expect(element.turntableRotation).to.be.equal(turntableRotation);
+        });
       });
     });
   });
